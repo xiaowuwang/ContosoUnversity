@@ -34,10 +34,21 @@ namespace ContosoUnversity.Controllers
                 return NotFound();
             }
 
+            //EF
             var department = await _context.Departments
                 .Include(d => d.Administrator)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(m => m.DepartmentID == id);
+
+            ////replacement of EF
+            //string query = "SELECT InstructorID, Budget, Name, RowVersion, StartDate, DepartmentID FROM Department WHERE DepartmentID = {0}";
+            //var department = await _context.Departments
+            //    .FromSql(query, id)
+            //    .Include(d => d.Administrator)
+            //    .AsNoTracking()
+            //    .SingleOrDefaultAsync();
+
+
             if (department == null)
             {
                 return NotFound();
